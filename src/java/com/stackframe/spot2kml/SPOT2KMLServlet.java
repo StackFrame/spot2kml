@@ -117,7 +117,7 @@ public class SPOT2KMLServlet extends HttpServlet {
         }
     }
 
-    public static SPOTMessage parse(Element e) {
+    private static SPOTMessage parse(Element e) {
         String esn = e.getElementsByTagName("esn").item(0).getTextContent();
         String esnName = e.getElementsByTagName("esnName").item(0).getTextContent();
         String messageType = e.getElementsByTagName("messageType").item(0).getTextContent();
@@ -127,7 +127,7 @@ public class SPOT2KMLServlet extends HttpServlet {
         return new SPOTMessage(esn, esnName, messageType, timeInGMTSecond, latitude, longitude);
     }
 
-    public static Collection<SPOTMessage> getMessages(Document document) {
+    private static Collection<SPOTMessage> getMessages(Document document) {
         Collection<SPOTMessage> messages = new ArrayList<SPOTMessage>();
         NodeList nodes = document.getElementsByTagName("message");
         for (int i = 0; i < nodes.getLength(); i++) {
@@ -138,7 +138,7 @@ public class SPOT2KMLServlet extends HttpServlet {
         return messages;
     }
 
-    public static void serialize(Document document, Writer writer) {
+    private static void serialize(Document document, Writer writer) {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         transformerFactory.setAttribute("indent-number", new Integer(4));
         try {
