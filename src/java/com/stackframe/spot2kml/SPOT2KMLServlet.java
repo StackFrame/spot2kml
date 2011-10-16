@@ -6,7 +6,6 @@ package com.stackframe.spot2kml;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.Writer;
 import java.util.Collection;
 import java.util.Map;
 import java.util.SortedSet;
@@ -21,11 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
@@ -92,20 +86,6 @@ public class SPOT2KMLServlet extends HttpServlet {
         }
     }
 
-    private static void serialize(Document document, Writer writer) {
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        transformerFactory.setAttribute("indent-number", new Integer(4));
-        try {
-            Transformer transformer = transformerFactory.newTransformer();
-            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            StreamResult result = new StreamResult(writer);
-            transformer.transform(new DOMSource(document), result);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     private static Element createPlacemark(SPOTMessage message, Document destinationDocument) {
         Element placemark = destinationDocument.createElement("Placemark");
         Element name = destinationDocument.createElement("name");
@@ -167,7 +147,7 @@ public class SPOT2KMLServlet extends HttpServlet {
         try {
             SortedSet<SPOTMessage> messages = getMessages(SPOTID);
             Document kml = makeKML(messages);
-            serialize(kml, out);
+            XMLUtils.serialize(kml, out);
         } catch (SAXException se) {
             throw new IOException(se);
         } finally {
