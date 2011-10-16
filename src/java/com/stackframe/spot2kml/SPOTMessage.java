@@ -5,6 +5,7 @@
 package com.stackframe.spot2kml;
 
 /**
+ * An encapsulation of the message returned by the SPOT service.
  *
  * @author mcculley
  */

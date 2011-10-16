@@ -15,6 +15,7 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 /**
+ * Various utility constants and functions for dealing with SPOT data.
  *
  * @author mcculley
  */

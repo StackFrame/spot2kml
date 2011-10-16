@@ -10,6 +10,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
+ * A cache of SPOT messages.
  *
  * @author mcculley
  */

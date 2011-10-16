@@ -36,6 +36,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
+ * A servlet that reads SPOT data and converts it to KML.
  *
  * @author mcculley
  */
