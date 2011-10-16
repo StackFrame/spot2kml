@@ -122,6 +122,7 @@ public class SPOT2KMLServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             SortedSet<SPOTMessage> messages = getMessages(SPOTID);
+            // FIXME: Support aggregating multiple SPOT IDs together.
             Document kml = makeKML(messages);
             XMLUtils.serialize(kml, out);
         } catch (SAXException se) {
