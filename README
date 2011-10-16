@@ -1,1 +1,19 @@
 This is a servlet for converting SPOT feeds to KML feeds.
+
+SPOT (http://www.findmespot.com/) is a service and a product line of gadgets
+for GPS tracking.
+
+KML (http://en.wikipedia.org/wiki/Keyhole_Markup_Language) is Keyhole Markup
+Language, the XML format used by Google Earth, Google Maps, and other GIS tools.
+
+This servlet does a simple translation, converting the SPOT feed into a KML
+document. The SPOT documentation at
+http://faq.findmespot.com/index.php?action=showEntry&data=69 explains how to do
+this with an Yahoo! Pipes and they have an existing pipe for this, but I needed
+to do some other processing with the data, so I built this.
+
+Once deployed, one supplies the SPOT "glId" as the parameter "SPOTID" to the
+servlet. e.g.,:
+http://localhost:8080/spot2kml/spot2kml?SPOTID=0XapxKiqW4RCHYhVkaCBpaHT3cNMUcEef
+
+Feel free to contact me at mcculley@stackframe.com if you have any questions.
