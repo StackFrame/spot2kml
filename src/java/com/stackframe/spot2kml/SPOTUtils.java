@@ -43,7 +43,7 @@ class SPOTUtils {
         }
     }
 
-    static Document getData(String id) throws IOException, SAXException {
+    private static Document getData(String id) throws IOException, SAXException {
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
@@ -75,7 +75,7 @@ class SPOTUtils {
      * @param document an XML Document containing SPOT messages
      * @return a Collection of SPOTMessage objects
      */
-    static Collection<SPOTMessage> getMessages(Document document) {
+    private static Collection<SPOTMessage> getMessages(Document document) {
         Collection<SPOTMessage> messages = new ArrayList<SPOTMessage>();
         NodeList nodes = document.getElementsByTagName("message");
         for (int i = 0; i < nodes.getLength(); i++) {
@@ -84,5 +84,15 @@ class SPOTUtils {
         }
 
         return messages;
+    }
+
+    /**
+     * Given a SPOT ID, parse out a collection of SPOTMessage objects.
+     *
+     * @param id the SPOT ID
+     * @return a Collection of SPOTMessage objects
+     */
+    static Collection<SPOTMessage> getMessages(String id) throws IOException, SAXException {
+        return getMessages(getData(id));
     }
 }

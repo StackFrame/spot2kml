@@ -17,12 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
-import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
@@ -84,8 +79,7 @@ public class SPOT2KMLServlet extends HttpServlet {
     private void refreshCache(String id, CachedMessages cm) throws IOException, SAXException {
         long age = System.currentTimeMillis() - cm.getLastUpdate();
         if (age > SPOTUtils.refreshLimit) {
-            Document document = SPOTUtils.getData(id);
-            Collection<SPOTMessage> messages = SPOTUtils.getMessages(document);
+            Collection<SPOTMessage> messages = SPOTUtils.getMessages(id);
             cm.addAll(messages);
         }
     }
