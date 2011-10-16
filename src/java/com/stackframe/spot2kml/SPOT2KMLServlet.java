@@ -192,6 +192,10 @@ public class SPOT2KMLServlet extends HttpServlet {
         Element documentElement = kml.createElement("Document");
         root.appendChild(documentElement);
         documentElement.appendChild(createPlacemark(messages.first(), kml));
+        // FIXME: Add trail of older messages.
+        // FIXME: Add configurable size of trail of older messages.
+        // FIXME: Add configurable icon.
+        // FIXME: Add a cue that shows the speed between messages.
         return kml;
     }
 
