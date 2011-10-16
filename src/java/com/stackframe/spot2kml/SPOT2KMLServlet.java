@@ -7,8 +7,6 @@ package com.stackframe.spot2kml;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
@@ -96,27 +94,6 @@ public class SPOT2KMLServlet extends HttpServlet {
         }
     }
 
-    private static URL makeSPOTURL(String id) {
-        try {
-            String base = "http://share.findmespot.com/messageService/guestlinkservlet";
-            String full = String.format("%s?glId=%s&completeXml=true", base, id);
-            return new URL(full);
-        } catch (MalformedURLException mue) {
-            // This shouldn't happen as we are in control of what the URL looks like.
-            throw new AssertionError(mue);
-        }
-    }
-
-    private static Document getSPOTData(String id) throws IOException, SAXException {
-        try {
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            return db.parse(makeSPOTURL(id).toExternalForm());
-        } catch (ParserConfigurationException pce) {
-            throw new AssertionError(pce);
-        }
-    }
-
     private static SPOTMessage parse(Element e) {
         String esn = e.getElementsByTagName("esn").item(0).getTextContent();
         String esnName = e.getElementsByTagName("esnName").item(0).getTextContent();
@@ -168,7 +145,7 @@ public class SPOT2KMLServlet extends HttpServlet {
     private void refreshCache(String id, CachedMessages cm) throws IOException, SAXException {
         long age = System.currentTimeMillis() - cm.getLastUpdate();
         if (age > SPOTUtils.refreshLimit) {
-            Document document = getSPOTData(id);
+            Document document = SPOTUtils.getData(id);
             Collection<SPOTMessage> messages = getMessages(document);
             cm.addAll(messages);
         }
