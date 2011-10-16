@@ -8,15 +8,15 @@ package com.stackframe.spot2kml;
  *
  * @author mcculley
  */
-public class SPOTMessage {
+class SPOTMessage {
 
-    public final String esn; // The DEVICE ESN field.
-    public final String esnName;
-    public final String messageType; // FIXME: Make into an enum.
-    public final long timeInGMTSecond;
-    public final double latitude, longitude;
+    final String esn; // The DEVICE ESN field.
+    final String esnName;
+    final String messageType; // FIXME: Make into an enum.
+    final long timeInGMTSecond;
+    final double latitude, longitude;
 
-    public SPOTMessage(String esn, String esnName, String messageType, long timeInGMTSecond, double latitude, double longitude) {
+    SPOTMessage(String esn, String esnName, String messageType, long timeInGMTSecond, double latitude, double longitude) {
         this.esn = esn;
         this.esnName = esnName;
         this.messageType = messageType;
@@ -59,5 +59,4 @@ public class SPOTMessage {
         hash = 17 * hash + (int) (this.timeInGMTSecond ^ (this.timeInGMTSecond >>> 32));
         return hash;
     }
-
 }

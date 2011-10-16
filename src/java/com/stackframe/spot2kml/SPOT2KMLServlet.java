@@ -44,7 +44,6 @@ import org.xml.sax.SAXException;
 public class SPOT2KMLServlet extends HttpServlet {
 
     private final Map<String, CachedMessages> cache = new ConcurrentHashMap<String, CachedMessages>();
-    private static final long SPOTRefreshLimit = 15; // Minimum time in minutes between updates.
     private final ScheduledExecutorService backgroundService = Executors.newScheduledThreadPool(1);
     private final Runnable cacheRefresher = new Runnable() {
 
@@ -168,7 +167,7 @@ public class SPOT2KMLServlet extends HttpServlet {
 
     private void refreshCache(String id, CachedMessages cm) throws IOException, SAXException {
         long age = System.currentTimeMillis() - cm.getLastUpdate();
-        if (age > TimeUnit.MINUTES.toMillis(SPOTRefreshLimit)) {
+        if (age > SPOTUtils.refreshLimit) {
             Document document = getSPOTData(id);
             Collection<SPOTMessage> messages = getMessages(document);
             cm.addAll(messages);

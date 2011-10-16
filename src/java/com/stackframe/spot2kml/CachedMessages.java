@@ -13,7 +13,7 @@ import java.util.TreeSet;
  *
  * @author mcculley
  */
-public class CachedMessages {
+class CachedMessages {
 
     // FIXME: Need to cap the maximum number of messages kept.
     private long lastRetrieve;
@@ -31,7 +31,7 @@ public class CachedMessages {
      *
      * @param m a Collection of SPOTMessage objects
      */
-    public synchronized void addAll(Collection<SPOTMessage> m) {
+    synchronized void addAll(Collection<SPOTMessage> m) {
         messages.addAll(m);
         lastUpdate = System.currentTimeMillis();
     }
@@ -41,7 +41,7 @@ public class CachedMessages {
      *
      * @return the sorted messages
      */
-    public synchronized SortedSet<SPOTMessage> getMessages() {
+    synchronized SortedSet<SPOTMessage> getMessages() {
         SortedSet<SPOTMessage> copy = new TreeSet<SPOTMessage>(messageTimeComparator);
         copy.addAll(messages);
         lastRetrieve = System.currentTimeMillis();
@@ -53,7 +53,7 @@ public class CachedMessages {
      *
      * @return the last time the messages were retrieved
      */
-    public long getLastRetrieve() {
+    long getLastRetrieve() {
         return lastRetrieve;
     }
 
@@ -62,7 +62,7 @@ public class CachedMessages {
      *
      * @return the last time the messages were updated
      */
-    public long getLastUpdate() {
+    long getLastUpdate() {
         return lastUpdate;
     }
 }
