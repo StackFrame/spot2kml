@@ -7,7 +7,6 @@ package com.stackframe.spot2kml;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.SortedSet;
@@ -31,8 +30,6 @@ import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
@@ -95,27 +92,6 @@ public class SPOT2KMLServlet extends HttpServlet {
         }
     }
 
-    private static SPOTMessage parse(Element e) {
-        String esn = e.getElementsByTagName("esn").item(0).getTextContent();
-        String esnName = e.getElementsByTagName("esnName").item(0).getTextContent();
-        String messageType = e.getElementsByTagName("messageType").item(0).getTextContent();
-        long timeInGMTSecond = Long.parseLong(e.getElementsByTagName("timeInGMTSecond").item(0).getTextContent());
-        double latitude = Double.parseDouble(e.getElementsByTagName("latitude").item(0).getTextContent());
-        double longitude = Double.parseDouble(e.getElementsByTagName("longitude").item(0).getTextContent());
-        return new SPOTMessage(esn, esnName, messageType, timeInGMTSecond, latitude, longitude);
-    }
-
-    private static Collection<SPOTMessage> getMessages(Document document) {
-        Collection<SPOTMessage> messages = new ArrayList<SPOTMessage>();
-        NodeList nodes = document.getElementsByTagName("message");
-        for (int i = 0; i < nodes.getLength(); i++) {
-            Node node = nodes.item(i);
-            messages.add(parse((Element) node));
-        }
-
-        return messages;
-    }
-
     private static void serialize(Document document, Writer writer) {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         transformerFactory.setAttribute("indent-number", new Integer(4));
@@ -147,7 +123,7 @@ public class SPOT2KMLServlet extends HttpServlet {
         long age = System.currentTimeMillis() - cm.getLastUpdate();
         if (age > SPOTUtils.refreshLimit) {
             Document document = SPOTUtils.getData(id);
-            Collection<SPOTMessage> messages = getMessages(document);
+            Collection<SPOTMessage> messages = SPOTUtils.getMessages(document);
             cm.addAll(messages);
         }
     }
