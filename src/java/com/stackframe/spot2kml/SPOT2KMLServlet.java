@@ -68,24 +68,6 @@ public class SPOT2KMLServlet extends HttpServlet {
         super.destroy();
     }
 
-    private static Document makeKML() {
-        try {
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            dbf.setNamespaceAware(true);
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            DOMImplementation di = db.getDOMImplementation();
-            String publicID = null;
-            String systemID = null;
-            String namespace = "http://www.opengis.net/kml/2.2";
-            DocumentType type = di.createDocumentType("kml", publicID, systemID);
-            Document output = di.createDocument(namespace, "kml", type);
-            output.setXmlStandalone(true);
-            return output;
-        } catch (ParserConfigurationException pce) {
-            throw new AssertionError(pce);
-        }
-    }
-
     private static Element createPlacemark(SPOTMessage message, Document destinationDocument) {
         Element placemark = destinationDocument.createElement("Placemark");
         Element name = destinationDocument.createElement("name");
@@ -120,7 +102,7 @@ public class SPOT2KMLServlet extends HttpServlet {
     }
 
     private static Document makeKML(SortedSet<SPOTMessage> messages) {
-        Document kml = makeKML();
+        Document kml = KMLUtils.makeKML();
         Element root = kml.getDocumentElement();
         Element documentElement = kml.createElement("Document");
         root.appendChild(documentElement);
