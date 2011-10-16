@@ -9,8 +9,8 @@ Language, the XML format used by Google Earth, Google Maps, and other GIS tools.
 This servlet does a simple translation, converting the SPOT feed into a KML
 document. The SPOT documentation at
 http://faq.findmespot.com/index.php?action=showEntry&data=69 explains how to do
-this with an Yahoo! Pipes and they have an existing pipe for this, but I needed
-to do some other processing with the data, so I built this.
+this with Yahoo! Pipes pipe and they have an existing pipe for this, but I
+needed to do some other processing with the data, so I built this.
 
 Once deployed, one supplies the SPOT "glId" as the parameter "SPOTID" to the
 servlet. e.g.,:
