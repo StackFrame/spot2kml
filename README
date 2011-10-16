@@ -17,3 +17,5 @@ servlet. e.g.,:
 http://localhost:8080/spot2kml/spot2kml?SPOTID=0XapxKiqW4RCHYhVkaCBpaHT3cNMUcEef
 
 Feel free to contact me at mcculley@stackframe.com if you have any questions.
+
+This code is licensed under v3.0 of the GPL.
